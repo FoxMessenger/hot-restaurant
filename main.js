@@ -54,7 +54,7 @@ function handleRequest(req, res){
 		break;
 
 		case '/tables':
-			fs.readFile('table.html', function(err, data) {
+			fs.readFile('tables.html', function(err, data) {
 				res.writeHead(200, {'Content-Type': 'text/html'});	
 				res.end(data);
 			});
@@ -83,7 +83,7 @@ var connection = mysql.createConnection({
     database: 'Hot_restaurantDB'
 });
 
-connected to the server
+// connected to the server
 connection.connect(function(err) {
     if (err){
     	console.log('the error is' + err);
@@ -102,7 +102,8 @@ var end = function() {
 // ==============================================
 // MYSQL DATABASE 
 // ==============================================
-dataList = 'SELECT * FROM products';
+
+// dataList = 'SELECT * FROM products';
 
 // ==============================================
 // Sets up the Express app to handle data parsing

@@ -64,7 +64,6 @@ function handleRequest(req, res){
 
 			break;
 
-
 		default:
 			fs.readFile('index.html', function(err, data) {
 				res.writeHead(200, {'Content-Type': 'text/html'});	
@@ -79,27 +78,10 @@ server.listen(PORT, function() {
 });
 
 
-var forms = [{
-	routeName: "name",
-	name: "Jason",
-	email: "jjson@yahoo.com", 
-	phone_number:"7738378488"
-},{
-	routeName: "name",
-	name:"Liam", 
-	email: "Liam7373@yahoo.com", 
-	phone_number: "7738282273"
-}, {
-	routeName: "name",
-	name: "zach",
-	email: "idk244@yahoo.com",
-	phone_number: "7747483888"
-}];
-
 // connecting to the database
 var connection = mysql.createConnection({
     host: 'localhost',
-    port: 3300,
+    port: 3306,
     user: 'root',
     password: '',
     database: 'Hot_restaurantDB'
@@ -112,6 +94,7 @@ connection.connect(function(err) {
     if (err){
     	console.log('the error is' + err);
 	} else {
+		query();
 	    console.log('connected...');
 	}
 });
@@ -132,27 +115,49 @@ var formSelect = 'SELECT * FROM forms';
 var dataArray = [];
 
 function query() { 
-	console.log('line 118')	
+	
 	connection.query(formSelect, function(err, res) {
-	if (err) {
-		console.log(err)
-	} else {
-		console.log('line 120')	
+		if (err) {
+			console.log(err)
+		} else {
+			
 			dataArray = res;
-	 	   console.log(res);
-	 	}
+		 	console.log(res);
+		}
 	})
 }
 
-app.get("/api/forms?", function(req, res) {
-	var chosen = req.params.forms;
-	for (var i = 0; i < forms.length; i++) {
-		return res.json(forms[i]);
-	}
-  // res.sendFile(path.join(__dirname, "tables.html"));
+
+app.post("/reserve", function(req, res) {
+  // req.body hosts is equal to the JSON post sent from the user
+  var newReservation = req.body;
+
+  console.log(newReservation);
+
+  // We then add the json the user sent to the character array
+  characters.push(Hot_restaurantDB);
+
+  // We then display the JSON to the users
+  res.json(Hot_restaurantDB);
 });
 
-query();
+
+app.get("/api/:tables?", function(req, res) {
+  var chosen = req.params.Hot_restaurantDB;
+
+  if (chosen) {
+    console.log(chosen);
+
+    for (var i = 0; i < Hot_restaurantDB.length; i++) {
+      if (chosen === Hot_restaurantDB[i].id) {
+        return res.json(Hot_restaurantDB[i]);
+      }
+    }
+    return res.json(false);
+  }
+  return res.json(Hot_restaurantDB);
+});
+
 
 // ==============================================
 // Sets up the Express app to handle data parsing
@@ -178,47 +183,43 @@ query();
 
 
 
-app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
-
-app.get("/reserve", function(req, res) {
-  res.sendFile(path.join(__dirname, "reserve.html"));
-});
-
-app.get("/tables", function(req, res) {
-  res.sendFile(path.join(__dirname, "tables.html"));
-});
-
-// Search for Specific Character (or all characters) - provides JSON
-app.get("/api/:forms?", function(req, res) {
-  var chosen = req.params.forms;
-
-  if (chosen) {
-    console.log(chosen);
-
-    for (var i = 0; i < forms.length; i++) {
-      if (chosen === forms[i].routeName) {
-        return res.json(forms[i]);
-      }
-    }
-
-    return res.json(false);
-  }
-  return res.json(forms);
-});
 
 
-// Create New Characters - takes in JSON input
-app.post("/api/reserve", function(req, res) {
-  var newreservation = req.body;
-  newreservation.routeName = newreservation.name.replace(/\s+/g, "").toLowerCase();
+// app.get("/reserve", function(req, res) {
+//   res.sendFile(path.join(__dirname, "reserve.html"));
+// });
 
+// app.get("/tables", function(req, res) {
+//   res.sendFile(path.join(__dirname, "tables.html"));
+// });
 
-  console.log(newreservation);
+// // Search for Specific Character (or all characters) - provides JSON
+// app.get("/api/:forms?", function(req, res) {
+//   var chosen = req.params.forms;
 
-  forms.push("#tableSection");
+//   if (chosen) {
+//     console.log(chosen);
 
-  res.json(newreservation);
-});
+//     for (var i = 0; i < forms.length; i++) {
+//       if (chosen === forms[i].routeName) {
+//         return res.json(forms[i]);
+//       }
+//     }
+
+//     return res.json(false);
+//   }
+//   return res.json(forms);
+// });
+
+// // // Create New Characters - takes in JSON input
+// app.post("/api/new", function(req, res) {
+//   var newcharacter = req.body;
+//   newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
+
+//   console.log(newcharacter);
+
+//   characters.push(newcharacter);
+
+//   res.json(newcharacter);
+// });
 

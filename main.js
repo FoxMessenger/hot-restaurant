@@ -35,15 +35,18 @@ function handleRequest(req, res){
 	
 	var urlParts = url.parse(req.url);
 	
+//	path.join('/foo', 'bar', 'baz/asdf', 'quux', '..')
+//	 Returns: '/foo/bar/baz/asdf'
 
 	switch (urlParts.pathname) {
 		
 		case "/":
+
 			fs.readFile("index.html", function(err, data) {
 				res.writeHead(200, { "Content-Type": "text/html" });	
 				res.end(data);
 			});
-		break;
+			break;
 
 		case '/reserve':
 			fs.readFile('reserve.html', function(err, data) {
@@ -51,7 +54,7 @@ function handleRequest(req, res){
 				res.end(data);
 			});
 
-		break;
+			break;
 
 		case '/tables':
 			fs.readFile('tables.html', function(err, data) {
@@ -59,13 +62,22 @@ function handleRequest(req, res){
 				res.end(data);
 			});
 
-		break;
+			break;
+
+		// case '/tables':
+		// 	fs.readFile('tables.html', function(err, data) {
+		// 		res.writeHead(200, {'Content-Type': 'text/html'});	
+		// 		res.end(data);
+		// 	});
+
+		// break;
 
 		default:
 			fs.readFile('index.html', function(err, data) {
 				res.writeHead(200, {'Content-Type': 'text/html'});	
 				res.end(data);
 			})
+			break;
 	}
 
 }
@@ -159,7 +171,7 @@ var end = function() {
 //   return res.json(forms);
 // });
 
-// // Create New Characters - takes in JSON input
+// // // Create New Characters - takes in JSON input
 // app.post("/api/new", function(req, res) {
 //   var newcharacter = req.body;
 //   newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();

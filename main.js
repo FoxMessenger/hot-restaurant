@@ -79,10 +79,27 @@ server.listen(PORT, function() {
 });
 
 
+var forms = [{
+	routeName: "name",
+	name: "Jason",
+	email: "jjson@yahoo.com", 
+	phone_number:"7738378488"
+},{
+	routeName: "name",
+	name:"Liam", 
+	email: "Liam7373@yahoo.com", 
+	phone_number: "7738282273"
+}, {
+	routeName: "name",
+	name: "zach",
+	email: "idk244@yahoo.com",
+	phone_number: "7747483888"
+}];
+
 // connecting to the database
 var connection = mysql.createConnection({
     host: 'localhost',
-    port: 3306,
+    port: 3300,
     user: 'root',
     password: '',
     database: 'Hot_restaurantDB'
@@ -160,43 +177,56 @@ app.get("/api/forms?", function(req, res) {
 
 
 
+<<<<<<< HEAD
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+=======
 
+>>>>>>> bbcea354976508ccb213281815ea4b37b420c1e4
 
-// app.get("/reserve", function(req, res) {
-//   res.sendFile(path.join(__dirname, "reserve.html"));
-// });
+app.get("/reserve", function(req, res) {
+  res.sendFile(path.join(__dirname, "reserve.html"));
+});
 
-// app.get("/tables", function(req, res) {
-//   res.sendFile(path.join(__dirname, "tables.html"));
-// });
+app.get("/tables", function(req, res) {
+  res.sendFile(path.join(__dirname, "tables.html"));
+});
 
-// // Search for Specific Character (or all characters) - provides JSON
-// app.get("/api/:forms?", function(req, res) {
-//   var chosen = req.params.forms;
+// Search for Specific Character (or all characters) - provides JSON
+app.get("/api/:forms?", function(req, res) {
+  var chosen = req.params.forms;
 
-//   if (chosen) {
-//     console.log(chosen);
+  if (chosen) {
+    console.log(chosen);
 
-//     for (var i = 0; i < forms.length; i++) {
-//       if (chosen === forms[i].routeName) {
-//         return res.json(forms[i]);
-//       }
-//     }
+    for (var i = 0; i < forms.length; i++) {
+      if (chosen === forms[i].routeName) {
+        return res.json(forms[i]);
+      }
+    }
 
-//     return res.json(false);
-//   }
-//   return res.json(forms);
-// });
+    return res.json(false);
+  }
+  return res.json(forms);
+});
 
+<<<<<<< HEAD
+// Create New Characters - takes in JSON input
+app.post("/api/reserve", function(req, res) {
+  var newreservation = req.body;
+  newreservation.routeName = newreservation.name.replace(/\s+/g, "").toLowerCase();
+=======
 // // // Create New Characters - takes in JSON input
 // app.post("/api/new", function(req, res) {
 //   var newcharacter = req.body;
 //   newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
+>>>>>>> bbcea354976508ccb213281815ea4b37b420c1e4
 
-//   console.log(newcharacter);
+  console.log(newreservation);
 
-//   characters.push(newcharacter);
+  forms.push("#tableSection");
 
-//   res.json(newcharacter);
-// });
+  res.json(newreservation);
+});
 

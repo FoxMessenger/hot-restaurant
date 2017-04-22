@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/FoxMessenger/hot-restaurant/issues"
   },
-  "homepage": "https://github.com/FoxMessenger/hot-restaurant#readme"
+  "homepage": "https://github.com/FoxMessenger/hot-restaurant#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
+  }
 }

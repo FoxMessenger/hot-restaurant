@@ -23,7 +23,7 @@ var path = require('path');					//
 var url = require('url');					
 var http = require("http");					
 var app = express();
-var PORT = 3300; 		// process environment
+var PORT = 3306; 		// process environment
 
 // =================
 // DEPENDENCIES
@@ -64,13 +64,6 @@ function handleRequest(req, res){
 
 			break;
 
-		// case '/tables':
-		// 	fs.readFile('tables.html', function(err, data) {
-		// 		res.writeHead(200, {'Content-Type': 'text/html'});	
-		// 		res.end(data);
-		// 	});
-
-		// break;
 
 		default:
 			fs.readFile('index.html', function(err, data) {
@@ -89,7 +82,7 @@ server.listen(PORT, function() {
 // connecting to the database
 var connection = mysql.createConnection({
     host: 'localhost',
-    port: 3300,
+    port: 3306,
     user: 'root',
     password: '',
     database: 'Hot_restaurantDB'
@@ -117,7 +110,32 @@ var end = function() {
 // MYSQL DATABASE 
 // ==============================================
 
-// dataList = 'SELECT * FROM products';
+var formSelect = 'SELECT * FROM forms';
+
+var dataArray = [];
+
+function query() { 
+	console.log('line 118')	
+	connection.query(formSelect, function(err, res) {
+	if (err) {
+		console.log(err)
+	} else {
+		console.log('line 120')	
+			dataArray = res;
+	 	   console.log(res);
+	 	}
+	})
+}
+
+app.get("/api/forms?", function(req, res) {
+	var chosen = req.params.forms;
+	for (var i = 0; i < forms.length; i++) {
+		return res.json(forms[i]);
+	}
+  // res.sendFile(path.join(__dirname, "tables.html"));
+});
+
+query();
 
 // ==============================================
 // Sets up the Express app to handle data parsing
@@ -143,9 +161,7 @@ var end = function() {
 
 
 
-// app.get("/", function(req, res) {
-//   res.sendFile(path.join(__dirname, "index.html"));
-// });
+
 
 // app.get("/reserve", function(req, res) {
 //   res.sendFile(path.join(__dirname, "reserve.html"));

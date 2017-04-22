@@ -21,8 +21,7 @@ var express = require('express');
 var path = require('path');
 
 var app = express();
-	process environment
-
+	// process environment
 var PORT = process.env.PORT || 3306;
 
 // connecting to the database

@@ -177,13 +177,9 @@ app.get("/api/forms?", function(req, res) {
 
 
 
-<<<<<<< HEAD
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 });
-=======
-
->>>>>>> bbcea354976508ccb213281815ea4b37b420c1e4
 
 app.get("/reserve", function(req, res) {
   res.sendFile(path.join(__dirname, "reserve.html"));
@@ -211,17 +207,12 @@ app.get("/api/:forms?", function(req, res) {
   return res.json(forms);
 });
 
-<<<<<<< HEAD
+
 // Create New Characters - takes in JSON input
 app.post("/api/reserve", function(req, res) {
   var newreservation = req.body;
   newreservation.routeName = newreservation.name.replace(/\s+/g, "").toLowerCase();
-=======
-// // // Create New Characters - takes in JSON input
-// app.post("/api/new", function(req, res) {
-//   var newcharacter = req.body;
-//   newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
->>>>>>> bbcea354976508ccb213281815ea4b37b420c1e4
+
 
   console.log(newreservation);
 

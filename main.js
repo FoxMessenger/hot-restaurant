@@ -35,15 +35,18 @@ function handleRequest(req, res){
 	
 	var urlParts = url.parse(req.url);
 	
+//	path.join('/foo', 'bar', 'baz/asdf', 'quux', '..')
+//	 Returns: '/foo/bar/baz/asdf'
 
 	switch (urlParts.pathname) {
 		
 		case "/":
+
 			fs.readFile("index.html", function(err, data) {
 				res.writeHead(200, { "Content-Type": "text/html" });	
 				res.end(data);
 			});
-		break;
+			break;
 
 		case '/reserve':
 			fs.readFile('reserve.html', function(err, data) {
@@ -51,7 +54,7 @@ function handleRequest(req, res){
 				res.end(data);
 			});
 
-		break;
+			break;
 
 		case '/tables':
 			fs.readFile('tables.html', function(err, data) {
@@ -59,13 +62,15 @@ function handleRequest(req, res){
 				res.end(data);
 			});
 
-		break;
+			break;
+
 
 		default:
 			fs.readFile('index.html', function(err, data) {
 				res.writeHead(200, {'Content-Type': 'text/html'});	
 				res.end(data);
 			})
+			break;
 	}
 
 }
@@ -122,7 +127,32 @@ var end = function() {
 // MYSQL DATABASE 
 // ==============================================
 
-// dataList = 'SELECT * FROM products';
+var formSelect = 'SELECT * FROM forms';
+
+var dataArray = [];
+
+function query() { 
+	console.log('line 118')	
+	connection.query(formSelect, function(err, res) {
+	if (err) {
+		console.log(err)
+	} else {
+		console.log('line 120')	
+			dataArray = res;
+	 	   console.log(res);
+	 	}
+	})
+}
+
+app.get("/api/forms?", function(req, res) {
+	var chosen = req.params.forms;
+	for (var i = 0; i < forms.length; i++) {
+		return res.json(forms[i]);
+	}
+  // res.sendFile(path.join(__dirname, "tables.html"));
+});
+
+query();
 
 // ==============================================
 // Sets up the Express app to handle data parsing
@@ -148,9 +178,13 @@ var end = function() {
 
 
 
+<<<<<<< HEAD
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 });
+=======
+
+>>>>>>> bbcea354976508ccb213281815ea4b37b420c1e4
 
 app.get("/reserve", function(req, res) {
   res.sendFile(path.join(__dirname, "reserve.html"));
@@ -178,10 +212,17 @@ app.get("/api/:forms?", function(req, res) {
   return res.json(forms);
 });
 
+<<<<<<< HEAD
 // Create New Characters - takes in JSON input
 app.post("/api/reserve", function(req, res) {
   var newreservation = req.body;
   newreservation.routeName = newreservation.name.replace(/\s+/g, "").toLowerCase();
+=======
+// // // Create New Characters - takes in JSON input
+// app.post("/api/new", function(req, res) {
+//   var newcharacter = req.body;
+//   newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
+>>>>>>> bbcea354976508ccb213281815ea4b37b420c1e4
 
   console.log(newreservation);
 

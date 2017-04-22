@@ -83,21 +83,26 @@ var connection = mysql.createConnection({
     database: 'Hot_restaurantDB'
 });
 
-// connected to the server
-// connection.connect(function(err) {
-//     if (err){
-//     	console.log('the error is' + err);
-// 	} else {
-// 	    console.log('connected...');
-// 	}
-// });
+connected to the server
+connection.connect(function(err) {
+    if (err){
+    	console.log('the error is' + err);
+	} else {
+	    console.log('connected...');
+	}
+});
 
-// // ending the connection
-// var end = function() {
-//     connection.end(function(err) {
-//         // The connection is terminated now
-//     });
-// }
+// ending the connection
+var end = function() {
+    connection.end(function(err) {
+        // The connection is terminated now
+    });
+}
+
+// ==============================================
+// MYSQL DATABASE 
+// ==============================================
+dataList = 'SELECT * FROM products';
 
 // ==============================================
 // Sets up the Express app to handle data parsing

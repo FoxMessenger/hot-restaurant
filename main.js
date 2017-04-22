@@ -23,7 +23,7 @@ var path = require('path');					//
 var url = require('url');					
 var http = require("http");					
 var app = express();
-var PORT = 3306; 		// process environment
+var PORT = 3300; 		// process environment
 
 // =================
 // DEPENDENCIES
@@ -95,6 +95,7 @@ connection.connect(function(err) {
     if (err){
     	console.log('the error is' + err);
 	} else {
+		query();
 	    console.log('connected...');
 	}
 });
@@ -134,8 +135,6 @@ app.get("/api/forms?", function(req, res) {
 	}
   // res.sendFile(path.join(__dirname, "tables.html"));
 });
-
-query();
 
 // ==============================================
 // Sets up the Express app to handle data parsing

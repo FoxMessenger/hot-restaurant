@@ -15,14 +15,40 @@
 // =================
 // DEPENDENCIES
 // =================
-
+var mysql = require('mysql');
 var bodyParser = require('body-parser');
 var express = require('express');
 var path = require('path');
 
 var app = express();
-	// process environment
-var PORT = process.env.PORT || 3000;
+	process environment
+
+var PORT = process.env.PORT || 3306;
+
+// connecting to the database
+var connection = mysql.createConnection({
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: '',
+    database: 'Hot_restaurantDB'
+});
+
+// connected to the server
+connection.connect(function(err) {
+    if (err){
+    	console.log('the error is' + err);
+	} else {
+	    console.log('connected...');
+	}
+});
+
+// ending the connection
+var end = function() {
+    connection.end(function(err) {
+        // The connection is terminated now
+    });
+}
 
 // ==============================================
 // Sets up the Express app to handle data parsing
@@ -38,13 +64,16 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 // DATA
 // ==============================================
 
-var reservations = [{}];
+var forms = [{}];
 
 // ==============================================
 // ROUTES
 // ==============================================
 
 // Basic route that sends the user first to the AJAX Page
+
+
+
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -58,21 +87,21 @@ app.get("/tables", function(req, res) {
 });
 
 // Search for Specific Character (or all characters) - provides JSON
-app.get("/api/:reservations?", function(req, res) {
-  var chosen = req.params.reservations;
+app.get("/api/:forms?", function(req, res) {
+  var chosen = req.params.forms;
 
   if (chosen) {
     console.log(chosen);
 
-    for (var i = 0; i < reservations.length; i++) {
-      if (chosen === reservations[i].routeName) {
-        return res.json(reservations[i]);
+    for (var i = 0; i < forms.length; i++) {
+      if (chosen === forms[i].routeName) {
+        return res.json(forms[i]);
       }
     }
 
     return res.json(false);
   }
-  return res.json(reservations);
+  return res.json(forms);
 });
 
 // Create New Characters - takes in JSON input

@@ -83,7 +83,7 @@ var connection = mysql.createConnection({
     database: 'Hot_restaurantDB'
 });
 
-connected to the server
+//connected to the server
 connection.connect(function(err) {
     if (err){
     	console.log('the error is' + err);

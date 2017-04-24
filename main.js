@@ -63,6 +63,13 @@ function handleRequest(req, res){
 			});
 
 			break;
+		case '/api/tables':
+			fs.readFile('tables.html', function(err, data) {
+				res.writeHead(200, {'Content-Type': 'text/html'});	
+				res.end(data);
+			});
+
+			break;
 
 		default:
 			fs.readFile('index.html', function(err, data) {
@@ -112,7 +119,7 @@ var end = function() {
 
 var formSelect = 'SELECT * FROM forms';
 
-var dataArray = [];
+var dataArray;
 
 function query() { 
 	
@@ -120,42 +127,43 @@ function query() {
 		if (err) {
 			console.log(err)
 		} else {
-			
-			dataArray = res;
-		 	console.log(res);
+			for (i = 0; i < res.length; i++) {
+				dataArray = res[i];
+			 	console.log(dataArray);
+		 	}
 		}
 	})
 }
 
 
-app.post("/reserve", function(req, res) {
+app.post("/api/:reserve?", function(req, res) {
   // req.body hosts is equal to the JSON post sent from the user
   var newReservation = req.body;
 
-  console.log(newReservation);
+  console.log(dataArray);
 
   // We then add the json the user sent to the character array
-  characters.push(Hot_restaurantDB);
+  characters.push(dataArray);
 
   // We then display the JSON to the users
-  res.json(Hot_restaurantDB);
+  res.json(dataArray);
 });
 
 
 app.get("/api/:tables?", function(req, res) {
-  var chosen = req.params.Hot_restaurantDB;
+  var chosen = req.params.dataArray;
 
   if (chosen) {
     console.log(chosen);
 
-    for (var i = 0; i < Hot_restaurantDB.length; i++) {
-      if (chosen === Hot_restaurantDB[i].id) {
-        return res.json(Hot_restaurantDB[i]);
+    for (var i = 0; i < dataArray.length; i++) {
+      if (chosen === dataArray[i].id) {
+        return res.json(dataArray[i]);
       }
     }
     return res.json(false);
   }
-  return res.json(Hot_restaurantDB);
+  return res.json(dataArray);
 });
 
 
